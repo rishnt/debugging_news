@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
    Context context;
    ArrayList<ModelClass> modelClassArrayList;
+    private int position;
 
     public Adapter(Context context, ArrayList<ModelClass> modelClassArrayList) {
         this.context = context;
@@ -33,27 +34,31 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
        return new ViewHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
 
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 Intent intent=new Intent(context,webView.class);
-                 intent.putExtra("url",modelClassArrayList.get(position).getUrl());
-                 context.startActivity(intent);
+                Intent intent=new Intent(context,webView.class);
+                intent.putExtra("url",modelClassArrayList.get(position).getUrl());
+                context.startActivity(intent);
             }
         });
-           holder.mtime.setText("Published At:-"+modelClassArrayList.get(position).getPublishedAt());
-           holder.mauthor.setText(modelClassArrayList.get(position).getAuthor());
-           holder.mheading.setText(modelClassArrayList.get(position).getTitle());
-           holder.mcontent.setText(modelClassArrayList.get(position).getDescription());
+        holder.mtime.setText("Published At:-"+modelClassArrayList.get(position).getPublishedAt());
+        holder.mauthor.setText(modelClassArrayList.get(position).getAuthor());
+        holder.mheading.setText(modelClassArrayList.get(position).getTitle());
+        holder.mcontent.setText(modelClassArrayList.get(position).getDescription());
         Glide.with(context).load(modelClassArrayList.get(position).getUrlToImage()).into(holder.imageview);
     }
-
     @Override
+
     public int getItemCount() {
         return modelClassArrayList.size();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
